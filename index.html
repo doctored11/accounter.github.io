@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/main.css" />
+    <title>list</title>
+  </head>
+  <body>
+    <!-- окно всплывающее -->
+    <div class="add-person-window d-none">
+      <form action="#" id="form" autocomplete="off" class="form-add">
+        <div class="form__input-box">
+          <input
+            type="text"
+            class="form__input form-control"
+            placeholder="имя"
+            autocomplete="off"
+            name="name"
+            id="name"
+          />
+          <input
+            type="text"
+            class="form__input form-control"
+            placeholder="имя"
+            autocomplete="off"
+            name="name"
+            id="name2"
+          />
+          <input
+            type="text"
+            class="form__input form-control"
+            placeholder="имя"
+            autocomplete="off"
+            name="name"
+            id="name3"
+          />
+        </div>
+
+        <div class="main__select">
+          <select name="select" id="select" class="select form__input">
+            <option value="">статус</option>
+            <option value="2">мертв</option>
+            <option value="3">притворяется</option>
+          </select>
+        </div>
+        <button class="btn-submit" id="submit-btn">добавить</button>
+      </form>
+    </div>
+
+    <!--  -->
+    <header class="header">
+      <a href="#">logo</a>
+    </header>
+
+    <section class="peolpe-list">
+      <div class="container peolpe-list__container">
+        <h2 class="people-list__heading">перепись</h2>
+        <div class="people-list__active-field active-field"></div>
+        <button class="btn-add" id="btn-add">add</button>
+      </div>
+    </section>
+
+    <!--  -->
+    <script src="scripts/main.js"></script>
+
+    <!--  -->
+  </body>
+</html>
