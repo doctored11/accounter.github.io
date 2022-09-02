@@ -6,7 +6,10 @@ let peopleArray = [];
 let people = {
   name: 0,
   surname: 0,
-  age: 0,
+  dadname: 0,
+  prof: 0,
+  dateY: 0,
+  dateD: 0,
   status: 0,
 };
 
@@ -43,9 +46,19 @@ let people = {
           people.surname = addInput[i].value;
           break;
         case 2:
-          people.age = addInput[i].value;
+          people.dadname = addInput[i].value;
           break;
         case 3:
+          people.prof = addInput[i].value;
+          break;
+        case 4:
+          people.dateY = addInput[i].value;
+          break;
+        case 5:
+          people.dateD = addInput[i].value;
+          break;
+
+        case 6:
           people.status = addInput[i].value;
           break;
       }
