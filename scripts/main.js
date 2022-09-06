@@ -3,6 +3,7 @@ let addBtn = document.getElementById('btn-add');
 let subBtn = document.getElementById('submit-btn');
 let addWin = document.querySelector('.add-person-window');
 let peopleArray = [];
+let buferArray = [];
 const people = {
   name: 0,
   prof: 0,
@@ -22,6 +23,15 @@ console.log(people);
     addWin.classList.remove('d-none');
   });
 
+  let filterInput = document.querySelectorAll('.filter-input');
+
+  for (let i = 0; i < filterInput.length; ++i) {
+    filterInput[i].addEventListener('input', () => {
+      liveFilt(filterInput[i].id, filterInput[i].value);
+      console.log(filterInput[i].value);
+    });
+  }
+
   let addInput = document.querySelectorAll('.form__input');
   let buferPeopleInfo = 0;
 
@@ -29,12 +39,19 @@ console.log(people);
     let errors = document.querySelectorAll('.just-validate-error-label');
     console.log(addInput[0].value.trim() == '');
     console.log(errors);
-    if (
-      errors.length < 1 &&
-      addInput[0].value.trim() != '' &&
-      addInput[2].value.trim() != '' &&
-      addInput[4].value.trim() != ''
-    ) {
+    let empty;
+    let tryFormat;
+    for (let i = 0; i < addInput.length; ++i) {
+      addInput[i].value.trim() != '' ? (empty = false) : 0;
+      addInput[i].value.trim().length >= 3 ? (tryFormat = true) : 0;
+      addInput[4].value.split('.')[2] >= 1800 ? (tryFormat = true) : 0;
+      addInput[4].value.split('.')[2] <= addInput[5].value.split('.')[2]
+        ? (tryFormat = true)
+        : 0;
+    }
+
+    console.log(empty, tryFormat, errors.length);
+    if (errors.length < 1 && empty != true && tryFormat == true) {
       getPeople();
       printTableBody(-1);
     }
@@ -48,7 +65,7 @@ console.log(people);
     peopleArray = JSON.parse(localStorage.getItem('listtest')) || [];
     for (let i = 0; i < addInput.length; ++i) {
       console.log(peopleArray);
-      //   console.log(addInput[i].value);
+
       switch (i) {
         case 0:
           people.name =
@@ -160,37 +177,81 @@ console.log(people);
     let sortBtn = document.querySelectorAll('.heading-name');
     for (let i = 0; i < sortBtn.length; ++i) {
       let dir = false;
+
       sortBtn[i].addEventListener('click', () => {
         dir = !dir;
-
-        multiSort(peopleArray, `${sortBtn[i].textContent}`, dir);
+        let sortArr = [];
+        buferArray.length > 0
+          ? (sortArr = [...buferArray])
+          : (sortArr = [...peopleArray]);
+        multiSort(sortArr, `${sortBtn[i].textContent}`, dir);
       });
     }
   }
 
-  function multiSort(arr, prop, metod = false) {
+  function liveFilt(standart, stValue) {
+    clearTimeout(print);
+    print = setTimeout(() => {
+      let sortArr = [];
+      buferArray.length > 0 ? (sortArr = [...buferArray]) : (sortArr = [...peopleArray]);
+      filter(sortArr, standart, stValue);
+    }, 250);
+  }
+
+  function filter(arr, standart, stValue) {
+    if (stValue == '') arr = peopleArray;
     const arrayCopy = [...arr];
+    stValue = stValue.trim();
+    standart = standart.trim();
 
-    let result = arrayCopy.sort(function (a, b) {
-      let sortMetod;
-
-      metod == false ? (sortMetod = a[prop] < b[prop]) : (sortMetod = a[prop] > b[prop]);
-
-      if (sortMetod == true) {
-        return -1;
+    for (let i = 0; i < arrayCopy.length; ++i) {
+      if (String(arrayCopy[i][standart]).includes(stValue)) {
+        console.log('!'); //  подходит по фильтру
+      } else {
+        arrayCopy.splice(i, 1);
+        i--;
       }
-    });
-
+    }
     let tbody = document.querySelector('.mainTableBody');
     tableClearVisualFull(tbody);
-
+    let result = arrayCopy;
     for (let i = 0; i < result.length; ++i) {
       printTableStroke(tbody, Object.values(result[i]));
     }
-
-    return result;
+    buferArray = result;
+    if (stValue == '') {
+      for (let i = 0; i < filterInput.length; ++i) {
+        if (filterInput[i].value.trim() != '') {
+          liveFilt(filterInput[i].id, filterInput[i].value);
+        }
+      }
+    }
   }
 }
+
+function multiSort(arr, prop, metod = false) {
+  const arrayCopy = [...arr];
+
+  let result = arrayCopy.sort(function (a, b) {
+    let sortMetod;
+
+    metod == false ? (sortMetod = a[prop] < b[prop]) : (sortMetod = a[prop] > b[prop]);
+
+    if (sortMetod == true) {
+      return -1;
+    }
+  });
+
+  let tbody = document.querySelector('.mainTableBody');
+  tableClearVisualFull(tbody);
+
+  for (let i = 0; i < result.length; ++i) {
+    printTableStroke(tbody, Object.values(result[i]));
+  }
+
+  return result;
+}
+
 //
 var selector = document.querySelectorAll("input[type='dat']");
 
@@ -257,10 +318,20 @@ validation
           date[date.length - 3] +
           date[date.length - 2] +
           date[date.length - 1];
+        let bufM = date[date.length - 6] + date[date.length - 5];
+        let bufВ = date[0] + date[1];
 
         console.log(buf);
         buf = Number(buf);
-        if (buf > 1700 && buf < 2025) {
+        let nowTime = new Date();
+        if (
+          buf > 1700 &&
+          buf < 2025 &&
+          buf <= nowTime.getFullYear() &&
+          bufM <= 12 &&
+          bufM > 0 &&
+          bufВ < 32
+        ) {
           return true;
         } else {
           return false;
@@ -283,12 +354,19 @@ validation
           date2[date2.length - 3] +
           date2[date2.length - 2] +
           date2[date2.length - 1];
-
+        let bufM = date2[date2.length - 6] + date2[date2.length - 5];
+        let bufВ = date2[0] + date2[1];
         console.log(buf);
         buf = Number(buf);
         let nowTime = new Date();
 
-        if (buf > 1700 && buf <= nowTime.getFullYear()) {
+        if (
+          buf > 1700 &&
+          buf <= nowTime.getFullYear() &&
+          bufM <= 12 &&
+          bufM > 0 &&
+          bufВ < 32
+        ) {
           return true;
         } else {
           return false;
