@@ -13,126 +13,174 @@
     <div class="add-person-window d-none main__validation-form">
       <form action="#" id="form" autocomplete="off" class="contact-form__form form-add">
         <div class="form__input-box">
-          <input
-            type="text"
-            class="form__input form-control"
-            placeholder="имя"
-            autocomplete="off"
-            name="name"
-            id="name1"
-          />
-          <input
-            type="text"
-            class="form__input form-control"
-            placeholder="фамилия"
-            autocomplete="off"
-            name="surname"
-            id="name2"
-          />
-          <input
-            type="text"
-            class="form__input form-control"
-            placeholder="отчество"
-            autocomplete="off"
-            name="dadname"
-            id="name3"
-          />
-          <input
-            type="text"
-            class="form__input form-control"
-            placeholder="профессия"
-            autocomplete="off"
-            name="prof"
-            id="prof"
-          />
-          <input
-            type="dat"
-            class="form__input form-control"
-            placeholder="Дата рождения"
-            autocomplete="off"
-            name="date"
-            id="date"
-          />
-
-          <input
-            type="dat"
-            class="form__input form-control"
-            placeholder="Дата смерти"
-            autocomplete="off"
-            name="date"
-            id="date2"
-          />
+          <div class="box-add">
+            <input
+              type="text"
+              class="form__input form-control input-add"
+              placeholder="имя"
+              autocomplete="off"
+              name="name"
+              id="name1"
+            />
+          </div>
+          <div class="box-add">
+            <input
+              type="text"
+              class="form__input form-control input-add"
+              placeholder="фамилия"
+              autocomplete="off"
+              name="surname"
+              id="name2"
+            />
+          </div>
+          <div class="box-add">
+            <input
+              type="text"
+              class="form__input form-control input-add"
+              placeholder="отчество"
+              autocomplete="off"
+              name="dadname"
+              id="name3"
+            />
+          </div>
+          <div class="box-add">
+            <input
+              type="text"
+              class="form__input form-control input-add"
+              placeholder="профессия"
+              autocomplete="off"
+              name="prof"
+              id="prof"
+            />
+          </div>
+          <div class="box-add">
+            <input
+              type="dat"
+              class="form__input form-control input-add"
+              placeholder="Дата рождения"
+              autocomplete="off"
+              name="date"
+              id="date"
+            />
+          </div>
+          <div class="box-add">
+            <input
+              type="dat"
+              class="form__input form-control input-add"
+              placeholder="Дата смерти"
+              autocomplete="off"
+              name="date"
+              id="date2"
+            />
+          </div>
         </div>
-
-        <div class="main__select">
-          <select name="select" id="select" class="select form__input">
-            <option value="">статус</option>
-            <option value="мертв">мертв</option>
-            <option value="притворяется">притворяется</option>
-          </select>
+        <div class="box-add box-select">
+          <div class="main__select">
+            <select name="select" id="select" class="select form__input">
+              <option value="">статус</option>
+              <option value="мертв">мертв</option>
+              <option value="притворяется">притворяется</option>
+            </select>
+          </div>
+          <button class="btn-submit btn" id="submit-btn">добавить</button>
         </div>
-        <button class="btn-submit" id="submit-btn">добавить</button>
       </form>
     </div>
 
     <!--  -->
     <header class="header">
-      <a href="#">logo</a>
-    </header>
-
-    <div class="filters">
-      <div class="filters__settings">
-        <form
-          action="#"
-          id="filter-form"
-          autocomplete="off"
-          class="contact-form__form form-add"
+      <div class="header__logo-box">
+        <svg
+          class="logo"
+          fill="none"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <div class="form__input-box">
-            <input
-              type="text"
-              class="form__input form-control filter-input"
-              placeholder="фильтер Фио"
-              autocomplete="off"
-              name="filt-1"
-              id="name"
-            />
-            <input
-              type="text"
-              class="form__input form-control filter-input"
-              placeholder="фильтер профессия"
-              autocomplete="off"
-              name="filt-2"
-              id="prof"
-            />
-            <input
-              type="text"
-              class="form__input form-control filter-input"
-              placeholder="фильтер арендаТ"
-              autocomplete="off"
-              name="filt-3"
-              id="rentTime"
-            />
-            <input
-              type="text"
-              class="form__input form-control filter-input"
-              placeholder="фильтер стату"
-              autocomplete="off"
-              name="filt-4"
-              id="status"
-            />
-          </div>
-        </form>
+          <path
+            clip-rule="evenodd"
+            d="M7.55279 2.77639C7.63748 2.607 7.81061 2.5 8 2.5H16C16.1894 2.5 16.3625 2.607 16.4472 2.77639L19.4472 8.77639C19.5006 8.88315 19.514 9.00548 19.4851 9.12127L16.9851 19.1213C16.9294 19.3439 16.7294 19.5 16.5 19.5H10C9.72386 19.5 9.5 19.2761 9.5 19C9.5 18.7239 9.72386 18.5 10 18.5H16.1096L18.4701 9.05817L15.691 3.5H8.30902L5.52993 9.05817L8.39039 20.5H17.6096L20.4757 9.03558L18.5358 4.1857C18.4332 3.9293 18.5579 3.63832 18.8143 3.53576C19.0707 3.4332 19.3617 3.55791 19.4642 3.8143L21.4642 8.8143C21.5033 8.91189 21.5106 9.0193 21.4851 9.12127L18.4851 21.1213C18.4294 21.3439 18.2294 21.5 18 21.5H8C7.77057 21.5 7.57058 21.3439 7.51493 21.1213L4.51493 9.12127C4.48598 9.00548 4.49941 8.88315 4.55279 8.77639L7.55279 2.77639Z"
+            fill="black"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h2 class="logo-name">Гроб<span>baze</span></h2>
       </div>
-    </div>
+    </header>
+    <section>
+      <div class="container">
+        <div class="filters">
+          <div class="filters__box">
+            <h2 class="people-list__heading">перепись</h2>
+            <div class="filter-ico"></div>
+          </div>
 
-    <section class="peolpe-list">
-      <div class="container peolpe-list__container">
-        <h2 class="people-list__heading">перепись</h2>
-        <div class="people-list__active-field active-field"></div>
-        <button class="btn-add" id="btn-add">add</button>
+          <div class="filters__settings d-none">
+            <form
+              action="#"
+              id="filter-form"
+              autocomplete="off"
+              class="contact-form__form form-add"
+            >
+              <div class="form__input-box">
+                <input
+                  type="text"
+                  class="form__input1 form-control filter-input"
+                  placeholder="фильтер Фио"
+                  autocomplete="off"
+                  name="filt-1"
+                  id="name"
+                />
+                <input
+                  type="text"
+                  class="form__input1 form-control filter-input"
+                  placeholder="фильтер профессия"
+                  autocomplete="off"
+                  name="filt-2"
+                  id="prof"
+                />
+                <input
+                  type="text"
+                  class="form__input1 form-control filter-input"
+                  placeholder="фильтер арендаТ"
+                  autocomplete="off"
+                  name="filt-3"
+                  id="rentTime"
+                />
+                <input
+                  type="text"
+                  class="form__input1 form-control filter-input"
+                  placeholder="фильтер стату"
+                  autocomplete="off"
+                  name="filt-4"
+                  id="status"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
+
+    <section class="peolpe-list">
+      <div class="container-table">
+        <div class="container peolpe-list__container">
+          <div class="people-list__active-field active-field"></div>
+          <button class="btn btn-add" id="btn-add">add</button>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container footer__container">
+        <p class="footer__txt">
+          A comic table of graves in the cemetery.<br />
+          Our planet is not infinite, if you do not get rid of old graves, then nothing
+          but the fields of crosses and slabs will remain. <br />You can add new rows to
+          the table and sort by properties, as well as filter.
+        </p>
+      </div>
+    </footer>
 
     <!--  -->
 

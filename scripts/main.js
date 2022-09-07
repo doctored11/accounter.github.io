@@ -4,6 +4,8 @@ let subBtn = document.getElementById('submit-btn');
 let addWin = document.querySelector('.add-person-window');
 let peopleArray = [];
 let buferArray = [];
+let statusI = {};
+
 const people = {
   name: 0,
   prof: 0,
@@ -23,12 +25,22 @@ console.log(people);
     addWin.classList.remove('d-none');
   });
 
+  let filterBtn = document.querySelector('.filter-ico');
+  let filtersSet = document.querySelector('.filters__settings');
+  filterBtn.addEventListener('click', () => {
+    filtersSet.classList.toggle('d-none');
+    filterBtn.classList.toggle('filter-ico--active');
+  });
+
   let filterInput = document.querySelectorAll('.filter-input');
 
   for (let i = 0; i < filterInput.length; ++i) {
     filterInput[i].addEventListener('input', () => {
-      liveFilt(filterInput[i].id, filterInput[i].value);
-      console.log(filterInput[i].value);
+      statusI[i] > filterInput[i].value.length ? (bool = false) : (bool = true);
+
+      statusI[i] = filterInput[i].value.length;
+
+      liveFilt(filterInput[i].id, filterInput[i].value, bool);
     });
   }
 
@@ -39,21 +51,29 @@ console.log(people);
     let errors = document.querySelectorAll('.just-validate-error-label');
     console.log(addInput[0].value.trim() == '');
     console.log(errors);
-    let empty;
-    let tryFormat;
-    for (let i = 0; i < addInput.length; ++i) {
-      addInput[i].value.trim() != '' ? (empty = false) : 0;
-      addInput[i].value.trim().length >= 3 ? (tryFormat = true) : 0;
-      addInput[4].value.split('.')[2] >= 1800 ? (tryFormat = true) : 0;
-      addInput[4].value.split('.')[2] <= addInput[5].value.split('.')[2]
+    let empty = false;
+    let tryFormat = true;
+    console.log(addInput);
+    for (let i = 0; i < addInput.length - 1; ++i) {
+      addInput[i].value.trim() != '' ? (empty = false) : (empty = true);
+      console.log(addInput[i].value.trim());
+      addInput[i].value.trim().length >= 3 ? (tryFormat = true) : (tryFormat = false);
+      Number(addInput[4].value.split('.')[2]) >= 1800
         ? (tryFormat = true)
-        : 0;
+        : (tryFormat = false);
+      Number(addInput[4].value.split('.')[2]) <= Number(addInput[5].value.split('.')[2])
+        ? (tryFormat = true)
+        : (tryFormat = false);
+      Number(addInput[5].value.split('.')[2]) <= 2022
+        ? (tryFormat = true)
+        : (tryFormat = false);
     }
 
     console.log(empty, tryFormat, errors.length);
     if (errors.length < 1 && empty != true && tryFormat == true) {
       getPeople();
       printTableBody(-1);
+      addWin.classList.add('d-none');
     }
   });
 
@@ -189,11 +209,13 @@ console.log(people);
     }
   }
 
-  function liveFilt(standart, stValue) {
+  function liveFilt(standart, stValue, bool) {
     clearTimeout(print);
     print = setTimeout(() => {
       let sortArr = [];
       buferArray.length > 0 ? (sortArr = [...buferArray]) : (sortArr = [...peopleArray]);
+      bool == true ? (sortArr = [...buferArray]) : (sortArr = [...peopleArray]);
+
       filter(sortArr, standart, stValue);
     }, 250);
   }
