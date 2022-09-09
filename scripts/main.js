@@ -79,6 +79,9 @@ console.log(people);
       printTableBody(-1);
       addWin.classList.add('d-none');
     }
+    for (let i = 0; i < addInput.length - 1; ++i) {
+      addInput[i].value = '';
+    }
   });
 
   //   ------------------------------------------------------------------------------
@@ -301,7 +304,7 @@ validation
   .addField('#name1', [
     {
       rule: 'required',
-      errorMessage: 'Name is required 😡',
+      errorMessage: 'field is required 😡',
     },
     {
       rule: 'minLength',
@@ -315,7 +318,7 @@ validation
   .addField('#name2', [
     {
       rule: 'required',
-      errorMessage: 'Name is required 😡',
+      errorMessage: 'field is required 😡',
     },
     {
       rule: 'minLength',
@@ -329,7 +332,7 @@ validation
   .addField('#name3', [
     {
       rule: 'required',
-      errorMessage: 'Name is required 😡',
+      errorMessage: 'field is required 😡',
     },
     {
       rule: 'minLength',
