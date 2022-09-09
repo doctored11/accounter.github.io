@@ -9,8 +9,8 @@ let statusI = {};
 const people = {
   name: 0,
   prof: 0,
-  dateY: 0,
-  dateD: 0,
+  birthDay: 0,
+  dayDeth: 0,
   status: 0,
   rentTime: 0,
 };
@@ -26,6 +26,10 @@ console.log(people);
   });
 
   let filterBtn = document.querySelector('.filter-ico');
+  let btnClose = document.querySelector('.btn-close');
+  btnClose.addEventListener('click', () => {
+    addWin.classList.add('d-none');
+  });
   let filtersSet = document.querySelector('.filters__settings');
   filterBtn.addEventListener('click', () => {
     filtersSet.classList.toggle('d-none');
@@ -103,11 +107,11 @@ console.log(people);
           people.prof = addInput[i].value.trim();
           break;
         case 4:
-          people.dateY = addInput[i].value.trim();
+          people.birthDay = addInput[i].value.trim();
           break;
         case 5:
-          people.dateD = addInput[i].value.trim();
-          people.dateD = addInput[i].value.trim() + ` (${getLifePeriod(people)}y.o)`;
+          people.dayDeth = addInput[i].value.trim();
+          people.dayDeth = addInput[i].value.trim() + ` (${getLifePeriod(people)}y.o)`;
           break;
         case 6:
           people.status = addInput[i].value;
@@ -181,12 +185,12 @@ console.log(people);
   function getLifePeriod(people) {
     // let nowTime= new Date();
     // console.log(nowTime.getFullYear());
-    let a = people.dateD.split('.');
-    let b = people.dateY.split('.');
+    let a = people.dayDeth.split('.');
+    let b = people.birthDay.split('.');
     return a[a.length - 1] - b[b.length - 1];
   }
   function getRentTime(people) {
-    let a = people.dateD.split('(');
+    let a = people.dayDeth.split('(');
     let b = a[0].split('.');
     let nowTime = new Date();
 
@@ -249,6 +253,16 @@ console.log(people);
       }
     }
   }
+  // селект стилизация
+  console.log(5);
+  const element = document.querySelector('.select');
+  const choices = new Choices(element, {
+    searchEnabled: false,
+    allowHTML: true,
+    searchChoices: true,
+    placeholder: true,
+    itemSelectText: '',
+  });
 }
 
 function multiSort(arr, prop, metod = false) {
