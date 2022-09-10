@@ -25,19 +25,27 @@ table {
 }
 
 thead th:nth-child(1) {
-  width: 30%;
+  width: 25%;
 }
 
 thead th:nth-child(2) {
-  width: 20%;
-}
-
-thead th:nth-child(3) {
   width: 15%;
 }
 
+thead th:nth-child(3) {
+  width: 10%;
+}
+
 thead th:nth-child(4) {
-  width: 35%;
+  width: 15%;
+}
+
+thead th:nth-child(5) {
+  width: 20%;
+}
+
+thead th:nth-child(6) {
+  width: 10%;
 }
 
 th,
@@ -355,4 +363,8 @@ thead {
   position: relative;
   padding-bottom: 2%;
   margin-bottom: 5%;
+}
+/*  */
+.match {
+  background-color: chartreuse;
 }

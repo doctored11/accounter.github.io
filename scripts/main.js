@@ -49,7 +49,6 @@ console.log(people);
   }
 
   let addInput = document.querySelectorAll('.form__input');
-  let buferPeopleInfo = 0;
 
   subBtn.addEventListener('click', () => {
     let errors = document.querySelectorAll('.just-validate-error-label');
@@ -58,17 +57,22 @@ console.log(people);
     let empty = false;
     let tryFormat = true;
     console.log(addInput);
+    //проверка первого ввода на корректность
     for (let i = 0; i < addInput.length - 1; ++i) {
       addInput[i].value.trim() != '' ? (empty = false) : (empty = true);
       console.log(addInput[i].value.trim());
       addInput[i].value.trim().length >= 3 ? (tryFormat = true) : (tryFormat = false);
-      Number(addInput[4].value.split('.')[2]) >= 1800
+      Number(addInput[4].value.split('.')[2]) >= 1800 &&
+      addInput[4].value.split('.')[1] <= 12 &&
+      addInput[4].value.split('.')[1] > 0
         ? (tryFormat = true)
         : (tryFormat = false);
       Number(addInput[4].value.split('.')[2]) <= Number(addInput[5].value.split('.')[2])
         ? (tryFormat = true)
         : (tryFormat = false);
-      Number(addInput[5].value.split('.')[2]) <= 2022
+      Number(addInput[5].value.split('.')[2]) <= new Date().getFullYear() &&
+      addInput[4].value.split('.')[1] <= 12 &&
+      addInput[4].value.split('.')[1] > 0
         ? (tryFormat = true)
         : (tryFormat = false);
     }
@@ -159,11 +163,11 @@ console.log(people);
   function printTableStroke(tablePart, contentArray, className = 'cell-name') {
     let stroke = document.createElement('tr');
     tablePart.append(stroke);
+
     for (let i = 0; i < Object.keys(people).length; ++i) {
       let buf = document.createElement('th');
       buf.classList.add(className);
-
-      buf.textContent = `${contentArray[i]}`;
+      buf.innerHTML = `${contentArray[i]}`;
       stroke.append(buf);
     }
   }
@@ -187,7 +191,7 @@ console.log(people);
   }
   function getLifePeriod(people) {
     // let nowTime= new Date();
-    // console.log(nowTime.getFullYear());
+    // console.log(new Date().getFullYear());
     let a = people.dayDeth.split('.');
     let b = people.birthDay.split('.');
     return a[a.length - 1] - b[b.length - 1];
@@ -220,7 +224,9 @@ console.log(people);
     clearTimeout(print);
     print = setTimeout(() => {
       let sortArr = [];
-      buferArray.length > 0 ? (sortArr = [...buferArray]) : (sortArr = [...peopleArray]);
+      buferArray.length > 0
+        ? (sortArr = [...buferArray])
+        : ((sortArr = [...peopleArray]), (bool = false));
       bool == true ? (sortArr = [...buferArray]) : (sortArr = [...peopleArray]);
 
       filter(sortArr, standart, stValue);
@@ -229,13 +235,24 @@ console.log(people);
 
   function filter(arr, standart, stValue) {
     if (stValue == '') arr = peopleArray;
-    const arrayCopy = [...arr];
+    let arrayCopy = [...arr];
     stValue = stValue.trim();
     standart = standart.trim();
 
     for (let i = 0; i < arrayCopy.length; ++i) {
+      if (String(arrayCopy[i][standart]).includes('<span class="match">')) {
+        arrayCopy = [...peopleArray];
+      }
       if (String(arrayCopy[i][standart]).includes(stValue)) {
         console.log('!'); //  подходит по фильтру
+        let buf = displayMatch(arrayCopy[i][standart], stValue, standart, i);
+        let buferArray = [];
+        for (let n; n < arrayCopy[i][standart].length; ++n) {
+          buferArray.push(arrayCopy[i][standart][n]);
+        }
+        buferArray.splice(i, 1, buf);
+
+        arrayCopy[i][standart] = buferArray.join('').replace(/,/g, '');
       } else {
         arrayCopy.splice(i, 1);
         i--;
@@ -243,7 +260,9 @@ console.log(people);
     }
     let tbody = document.querySelector('.mainTableBody');
     tableClearVisualFull(tbody);
+
     let result = arrayCopy;
+
     for (let i = 0; i < result.length; ++i) {
       printTableStroke(tbody, Object.values(result[i]));
     }
@@ -266,29 +285,50 @@ console.log(people);
     placeholder: true,
     itemSelectText: '',
   });
-}
 
-function multiSort(arr, prop, metod = false) {
-  const arrayCopy = [...arr];
+  function multiSort(arr, prop, metod = false) {
+    const arrayCopy = [...arr];
 
-  let result = arrayCopy.sort(function (a, b) {
-    let sortMetod;
+    let result = arrayCopy.sort(function (a, b) {
+      let sortMetod;
 
-    metod == false ? (sortMetod = a[prop] < b[prop]) : (sortMetod = a[prop] > b[prop]);
+      metod == false ? (sortMetod = a[prop] < b[prop]) : (sortMetod = a[prop] > b[prop]);
 
-    if (sortMetod == true) {
-      return -1;
+      if (sortMetod == true) {
+        return -1;
+      }
+    });
+
+    let tbody = document.querySelector('.mainTableBody');
+    tableClearVisualFull(tbody);
+
+    for (let i = 0; i < result.length; ++i) {
+      printTableStroke(tbody, Object.values(result[i]));
     }
-  });
 
-  let tbody = document.querySelector('.mainTableBody');
-  tableClearVisualFull(tbody);
-
-  for (let i = 0; i < result.length; ++i) {
-    printTableStroke(tbody, Object.values(result[i]));
+    return result;
   }
+  function displayMatch(filterArray, matchPart, standart, number) {
+    peopleArray = JSON.parse(localStorage.getItem('listtest')) || [];
+    String(filterArray).includes('span')
+      ? (filterArray = peopleArray[number][standart])
+      : 0;
 
-  return result;
+    if (filterArray.length == undefined) {
+      filterArray = String(filterArray);
+    }
+    for (let i = 0; i < filterArray.length; ++i) {
+      let buf = filterArray.indexOf(matchPart);
+      filterArray[i];
+      let arrayBuf = [];
+      for (let n = 0; n < filterArray.length; ++n) {
+        arrayBuf.push(filterArray[n]);
+      }
+      arrayBuf.splice(buf, matchPart.length, `<span class="match">${matchPart}</span>`);
+
+      return arrayBuf;
+    }
+  }
 }
 
 //
